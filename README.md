@@ -415,6 +415,46 @@ A_Share_investment_Agent/
 <img src="[https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)" width="100%">
 </div>
 
+## 🚧 二次开发需求规划 (Development Roadmap)
+
+> 完整版（含验收标准、待确认事项）见 [`二次开发需求规划.md`](二次开发需求规划.md)。
+
+### 目标与现状
+
+在保留现有多 Agent 分析能力的前提下，将项目从"可跑的原型"升级为"稳定、可维护、可持续迭代的系统"。当前主要短板：
+
+| 类别 | 问题 |
+| --- | --- |
+| 阻断性 bug | `run_with_backend.py --ticker` 缺少 `run_id` 导致 `TypeError` |
+| 功能失效 | `--summary` 依赖的模块缺失，被静默降级 |
+| 环境矛盾 | Python 声明 `^3.9`，但代码使用 `datetime.UTC`（需 3.11+） |
+| 启动缺陷 | 仅配 OpenAI 兼容 API 时导入期强依赖 `GEMINI_API_KEY` |
+| 无持久化 | 运行记录与日志存于内存，重启丢失；`runs.py` 留有 TODO |
+| 无前端 / 测试 | 仅 CLI + Swagger UI；无标准 `tests/` 与 CI |
+| 文档不同步 | README 中部分 API 路径与模块路径和代码不一致 |
+
+### 需求分级
+
+| 优先级 | 重点 | 主要需求 |
+| --- | --- | --- |
+| **P0** 阻断性修复 | 跑通入口 | 修复 `--ticker` 调用、`--summary`、Python 版本声明、LLM 配置校验、统一 API 文档 |
+| **P1** 工程化底座 | 可追溯可验证 | SQLite 持久化、测试体系与 CI、统一配置管理、结构化日志（按 `run_id` 串联） |
+| **P2** 功能增强 | 可靠可用 | AkShare 重试/降级、LLM 成本治理、回测转正、多股票/组合分析、结果可视化、Agent 过程可观测 |
+| **P3** 产品化（可选） | 用户友好 | Web UI、定时分析推送、多用户与权限 |
+
+### 风险与约束
+
+- **许可证**：新增/修改代码为 GPLv3 + 非商业条款，商用前需确认授权。
+- **数据合规**：AkShare 抓取需遵守数据源条款与频率限制。
+- **LLM 成本**：需预算上限、调用统计与缓存复用。
+- **定位**：仅用于教育研究，不构成投资建议，产品化时保留免责声明。
+
+按 **P0 → P1 → P2 → P3** 顺序推进，每阶段通过验收后再进入下一阶段。
+
+<div align="center">
+<img src="[https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)" width="100%">
+</div>
+
 ## ☕️ 支持与社区
 
 如果这个项目对你有帮助，欢迎请我喝杯咖啡 ❤️
