@@ -140,6 +140,7 @@ def run_with_backend():
         print(f"\n📊 开始执行投资分析... (运行ID: {run_id})")
         with workflow_run(run_id):
             result = run_hedge_fund(
+                run_id=run_id,
                 ticker=args.ticker,
                 start_date=start_date.strftime('%Y-%m-%d'),
                 end_date=end_date.strftime('%Y-%m-%d'),
